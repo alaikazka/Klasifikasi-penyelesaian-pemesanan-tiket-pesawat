@@ -4,11 +4,11 @@ import numpy as np
 import joblib
 
 st.set_page_config(
-    page_title="Prediksi Penyelesaian Pemesanan Tiket Pesawat",
+    page_title="SkyCast: Flight Booking Prediction",
+    page_icon="✈️",
     layout="wide"
 )
 
-# Load Model=
 @st.cache_resource
 def load_artifacts():
     return joblib.load('flight_booking_model.joblib')
@@ -26,8 +26,7 @@ except FileNotFoundError:
 
 st.title("Prediksi Penyelesaian Booking")
 st.markdown("""
-prediksi ini menggunakan algoritma **Random Forest** untuk memprediksi apakah pelanggan akan menyelesaikan pemesanan tiket pesawat mereka atau tidak.
-Silakan input data pelanggan di panel sebelah kiri.
+Prediksi ini menggunakan algoritma **Random Forest** untuk memprediksi apakah pelanggan akan menyelesaikan pemesanan tiket pesawat mereka.
 """)
 
 
@@ -93,13 +92,13 @@ if st.button("🔍 Prediksi"):
     input_df['booking_origin'] = le_origin.transform(input_df['booking_origin'])
     
     input_df = pd.get_dummies(input_df, columns=['sales_channel', 'trip_type'], drop_first=True)
-    
     input_df = input_df.reindex(columns=feature_columns, fill_value=0)
     
     input_df_scaled = scaler.transform(input_df)
     
-    prediction = model.predict(input_df_scaled)
     prediction_proba = model.predict_proba(input_df_scaled)
+    
+    prob_success = prediction_proba[0][1]
     
     st.divider()
     col1, col2 = st.columns(2)
@@ -125,4 +124,4 @@ if st.button("🔍 Prediksi"):
             st.caption("Status: Low Potential")
 
     if prob_success <= 0.4:
-        st.info("💡 **Saran:** Tawarkan diskon bagasi atau makanan untuk meningkatkan minat pelanggan ini.")
+        st.info("**Saran:** Tawarkan diskon bagasi atau makanan untuk meningkatkan minat pelanggan ini.")
