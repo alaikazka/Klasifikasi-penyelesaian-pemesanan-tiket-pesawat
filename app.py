@@ -4,8 +4,7 @@ import numpy as np
 import joblib
 
 st.set_page_config(
-    page_title="SkyCast: Flight Booking Prediction",
-    page_icon="✈️",
+    page_title="Prediksi Penyelesaian Pemesanan Tiket Pesawat",
     layout="wide"
 )
 
