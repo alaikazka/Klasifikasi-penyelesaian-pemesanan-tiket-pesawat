@@ -106,7 +106,7 @@ if st.button("🔍 Prediksi"):
     with col1:
         st.subheader("Hasil Prediksi")
         
-        if prob_success > 0.4:
+        if prob_success > 0.55:
             st.success("✅ **Booking Complete (Berhasil)**")
             st.write("Pelanggan ini diprediksi akan menyelesaikan pembayaran.")
         else:
@@ -118,7 +118,7 @@ if st.button("🔍 Prediksi"):
         st.metric(label="Kemungkinan Booking", value=f"{prob_success*100:.2f}%")
         st.progress(int(prob_success * 100))
         
-        if prob_success > 0.4:
+        if prob_success > 0.55:
             st.caption("Status: High Potential")
         else:
             st.caption("Status: Low Potential")
